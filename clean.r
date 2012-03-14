@@ -1,29 +1,29 @@
 # New effort to wrap up my dispersal experiment.
 rm(list=ls())
 setwd('~/Github/postdoc/dispersal_analysis')
-load('dispersal_cleaned.rdata')
-# ````````````````````````````````````````````````````
-# six weeks, 4 plots per week. so 24 plots in year1.
-# ````````````````````````````````````````````````````
+library(data.table)
+library(plyr)
+library(stringr)
+load("data/raw_dispersal.rdata")
 
-year1=subset(dispersal,year==1)
-year1$total=year1$wax1+year1$wax2+year1$wax3
-year1=year1[,-c(4,5,6,13,14,15)]
-year1$loc[year1$loc=="Center "]="Center"
-year1$dist[year1$dist==1]=100
-year1$dist[year1$dist==1.4]=140
+names(year1) <- tolower(names(year1))
+year1 <- year1[,-which(names(year1)=="total")]
+names(year2) <- tolower(names(year2))
+year1 <- year1[, -which(names(year1)=="year")]
+year2 <- year2[, -which(names(year2)=="year")]
+year1$period <- "Y1"
+year2$period <- "Y2"
+disp_data <- rbind(year1, year2)
 
-agg <- function (data)
-{
-dat=ddply(data, .(dist), transform, count=sum(total))
-dat=dat[,c(2,7,8,9,11)]
-dat2=unique(dat)
-return (dat2)
-}
+# Cleaning up field names
+disp_data$location <- str_trim(tolower(disp_data$location), side = "both")
+disp_data$total_hits <- disp_data$g_w1 + disp_data$g_w2 + disp_data$g_w3
+names(disp_data)[which(names(disp_data)=="treatment")]="trt"
+# Clean up dates
+disp_data$d1 <- as.Date(disp_data$d1)
+disp_data$d2 <- as.Date(disp_data$d2)
+disp_data$distance <- round(disp_data$distance,0)
+disp_data$treatment <- as.factor(disp_data$treatment)
+disp_data$week <- as.factor(disp_data$week)
 
-
-resulting_data = dlply(year1, .(plot), agg)
-# This makes a count of each plot ignoring depth and direction
-
-r=ldply(resulting_data)
-ggplot(r, aes(dist,count,group=plot)) + geom_line() + facet_wrap(trt~week)
+save(disp_data, file="data/cleaned_disp_data.rdata")
