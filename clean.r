@@ -1,7 +1,6 @@
-# clean.r
+# New effort to wrap up my dispersal experiment.
 rm(list=ls())
-library(ggplot2)
-setwd('~/Documents/Work/Active Projects/Dispersal/analysis_2011/')
+setwd('~/Github/postdoc/dispersal_analysis')
 load('dispersal_cleaned.rdata')
 # ````````````````````````````````````````````````````
 # six weeks, 4 plots per week. so 24 plots in year1.
@@ -28,4 +27,3 @@ resulting_data = dlply(year1, .(plot), agg)
 
 r=ldply(resulting_data)
 ggplot(r, aes(dist,count,group=plot)) + geom_line() + facet_wrap(trt~week)
-# plots counts of the dispersing nematodes
