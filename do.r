@@ -158,6 +158,13 @@ print(d, vp = vplayout(2, 2))
 
 
 
-##
 
+resulting_data = dlply(year1, .(plot), agg)
+# This makes a count of each plot ignoring depth and direction
+
+r=ldply(resulting_data)
+ggplot(r, aes(dist,count,group=plot)) + geom_line() + facet_wrap(trt~week)
+
+
+# six weeks, 4 plots per week. so 24 plots in year1.
 
