@@ -23,7 +23,15 @@ names(disp_data)[which(names(disp_data)=="treatment")]="trt"
 disp_data$d1 <- as.Date(disp_data$d1)
 disp_data$d2 <- as.Date(disp_data$d2)
 disp_data$distance <- round(disp_data$distance,0)
-disp_data$treatment <- as.factor(disp_data$treatment)
+disp_data$trt <- as.factor(disp_data$trt)
 disp_data$week <- as.factor(disp_data$week)
 
+# disp_data dimensions = 5328, 16
+disp_data <- disp_data[, -c(4,5,6,12,13,14)]
+# temporarily removing moisture field as well.
+disp_data <- disp_data[, -4]
+# rearranging columns
+disp_data <- disp_data[, c(7,6,5,2,3,1,4,8,9)]
+
+# save cleaned data to disk
 save(disp_data, file="data/cleaned_disp_data.rdata")
