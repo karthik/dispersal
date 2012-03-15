@@ -1,8 +1,6 @@
 # New effort to wrap up my dispersal experiment.
 rm(list=ls())
 setwd('~/Github/postdoc/dispersal_analysis')
-library(data.table)
-library(plyr)
 library(stringr)
 load("data/raw_dispersal.rdata")
 
@@ -32,6 +30,14 @@ disp_data <- disp_data[, -c(4,5,6,12,13,14)]
 disp_data <- disp_data[, -4]
 # rearranging columns
 disp_data <- disp_data[, c(7,6,5,2,3,1,4,8,9)]
+
+# fix distances
+disp_data$distance[disp_data$distance==1]=100
+disp_data$distance[disp_data$distance==1.4]=140
+
+# remove true year temporarily
+disp_data <- disp_data[, -which(names(disp_data)=="true_year")]
+
 
 # save cleaned data to disk
 save(disp_data, file="data/cleaned_disp_data.rdata")
