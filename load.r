@@ -3,7 +3,6 @@
 # Data spans 2 years (2007, 2008).
 rm(list=ls())
 setwd('~/Github/postdoc/dispersal_analysis')
-library(plyr)
 library(RMySQL)
 
 # Grabbing data from the database
