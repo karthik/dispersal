@@ -38,6 +38,5 @@ disp_data$distance[disp_data$distance==1.4]=140
 # remove true year temporarily
 disp_data <- disp_data[, -which(names(disp_data)=="true_year")]
 
-
 # save cleaned data to disk
 save(disp_data, file="data/cleaned_disp_data.rdata")
