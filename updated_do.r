@@ -16,4 +16,4 @@ ggplot(s3, aes(distance, value, colour=trt)) + geom_point(size=3, alpha=0.8) + f
 # Analyses
 
 # Plots
- 
+
