@@ -1,5 +1,5 @@
 # New effort to wrap up my dispersal experiment.
-# Analysis of the dispersal data from the lower-draw plots. 
+# Analysis of the dispersal data from the lower-draw plots.
 # Data spans 2 years (2007, 2008).
 rm(list=ls())
 setwd('~/Github/postdoc/dispersal_analysis')
