@@ -5,3 +5,4 @@ manuscript/dispersal.pdf
 *.rda
 *.csv
 data/*
+.DS_Store
